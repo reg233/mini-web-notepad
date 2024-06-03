@@ -1,0 +1,18 @@
+Options -Indexes
+RewriteEngine On
+RewriteRule ^([a-zA-Z0-9_-]+)$ view.php?note=$1 [L,QSA]
+RewriteRule ^edit/$|^edit/([a-zA-Z0-9_-]+)$ edit.php?note=$1 [L,QSA]
+
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag: "noindex, nofollow"
+</IfModule>
+
+# Uncomment the lines below to enable basic authentication.
+# See https://httpd.apache.org/docs/current/programs/htpasswd.html for generating your .htpasswd
+
+# <If "%{REQUEST_URI} =~ m#^/edit/.*#">
+#   AuthType Basic
+#   AuthName "Please login!"
+#   AuthUserFile "/home/foo/bar/.htpasswd"
+#   Require valid-user
+# </If>
