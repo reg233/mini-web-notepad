@@ -1,3 +1,16 @@
+const copy = document.getElementById("copy");
+copy.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  if (copy.innerText !== "Copied") {
+    navigator.clipboard.writeText(textarea.value);
+    copy.innerText = "Copied";
+    setTimeout(function () {
+      copy.innerText = "Copy";
+    }, 1000);
+  }
+});
+
 function uploadContent() {
   if (content !== textarea.value) {
     const temp = textarea.value;

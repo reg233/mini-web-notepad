@@ -60,11 +60,25 @@ if (is_file($path)) {
     <span><?php print $_GET['note']; ?></span>
     <a href="/edit/">New</a>
     <a href="/edit/<?php print $_GET['note']; ?>">Edit</a>
+    <a id="copy" href="" title="Copy Raw">Copy</a>
     <a href="/">List</a>
   </div>
   <script src="/js/markdown-it.min.js"></script>
   <script src="/js/markdown-it-task-lists.min.js"></script>
   <script>
+    const copy = document.getElementById("copy");
+    copy.addEventListener("click", function(e) {
+      e.preventDefault();
+
+      if (copy.innerText !== "Copied") {
+        navigator.clipboard.writeText(content);
+        copy.innerText = "Copied";
+        setTimeout(function() {
+          copy.innerText = "Copy";
+        }, 1000);
+      }
+    });
+
     let content = <?php echo json_encode($content); ?>;
     const doc = new DOMParser().parseFromString(content, "text/html");
     content = doc.documentElement.textContent;

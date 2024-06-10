@@ -64,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <span><?php print $_GET['note']; ?></span>
     <a href="/edit/">New</a>
     <a href="/<?php print $_GET['note']; ?>">View</a>
+    <a id="copy" href="" title="Copy Raw">Copy</a>
     <a href="/">List</a>
   </div>
   <script src="/js/markdown-it.min.js"></script>
