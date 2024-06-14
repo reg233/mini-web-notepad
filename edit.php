@@ -21,7 +21,7 @@ if (
   die;
 }
 
-$path = '_tmp' . '/' . $_GET['note'] . '.md';
+$path = '_notes' . '/' . $_GET['note'] . '.md';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $text = isset($_POST['text']) ? $_POST['text'] : file_get_contents("php://input");
   file_put_contents($path, $text);

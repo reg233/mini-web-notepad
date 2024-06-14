@@ -10,7 +10,7 @@ RewriteRule ^edit/$|^edit/([a-zA-Z0-9_-]+)$ edit.php?note=$1 [L,QSA]
 # Uncomment the lines below to enable basic authentication.
 # See https://httpd.apache.org/docs/current/programs/htpasswd.html for generating your .htpasswd
 
-# <If "%{REQUEST_URI} =~ m#^/edit/.*#">
+# <If "%{REQUEST_URI} =~ m#^(/edit/.*)|(edit.php)$#">
 #   AuthType Basic
 #   AuthName "Please login!"
 #   AuthUserFile "/home/foo/bar/.htpasswd"

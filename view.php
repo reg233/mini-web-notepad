@@ -21,7 +21,7 @@ if (
   die;
 }
 
-$path = '_tmp' . '/' . $_GET['note'] . '.md';
+$path = '_notes' . '/' . $_GET['note'] . '.md';
 $content = '';
 if (is_file($path)) {
   $content = htmlspecialchars(file_get_contents($path), ENT_QUOTES, 'UTF-8');

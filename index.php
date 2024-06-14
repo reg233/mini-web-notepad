@@ -1,5 +1,5 @@
 <?php
-$path = '_tmp';
+$path = '_notes';
 $files = array_diff(scandir($path), array('.', '..', '.htaccess'));
 ?>
 <!DOCTYPE html>
