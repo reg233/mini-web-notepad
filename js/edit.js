@@ -1,40 +1,69 @@
-const copy = document.getElementById("copy");
-copy.addEventListener("click", function (e) {
+const copyElement = document.getElementById("copy");
+copyElement.addEventListener("click", (e) => {
   e.preventDefault();
 
-  if (copy.innerText !== "Copied") {
+  if (copyElement.innerText !== "Copied") {
     navigator.clipboard.writeText(textarea.value);
-    copy.innerText = "Copied";
-    setTimeout(function () {
-      copy.innerText = "Copy";
+    copyElement.innerText = "Copied";
+    setTimeout(() => {
+      copyElement.innerText = "Copy";
     }, 1000);
   }
 });
 
-function uploadContent() {
+const deleteElement = document.getElementById("delete");
+deleteElement.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  if (confirm("Do you really want to delete?")) {
+    try {
+      const response = await fetch(window.location.href, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        },
+        method: "POST",
+      });
+      if (response.ok) {
+        window.open("/", "_self");
+      } else {
+        throw new Error();
+      }
+    } catch {
+      alert("Delete failed!");
+    }
+  }
+});
+
+const uploadContent = async () => {
   if (content !== textarea.value) {
     const temp = textarea.value;
-    const request = new XMLHttpRequest();
-    request.open("POST", window.location.href, true);
-    request.setRequestHeader(
-      "Content-Type",
-      "application/x-www-form-urlencoded; charset=UTF-8"
-    );
-    request.onload = function () {
-      if (request.readyState === 4) {
+    try {
+      const response = await fetch(window.location.href, {
+        body: `text=${encodeURIComponent(temp)}`,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        },
+        method: "POST",
+      });
+      if (response.ok) {
+        if (temp === textarea.value) {
+          statusElement.className = "status-success";
+        }
         content = temp;
-        setTimeout(uploadContent, 1000);
+      } else {
+        throw new Error();
       }
-    };
-    request.onerror = function () {
+    } catch {
+      statusElement.className = "status-danger";
+    } finally {
       setTimeout(uploadContent, 1000);
-    };
-    request.send("text=" + encodeURIComponent(temp));
+    }
   } else {
     setTimeout(uploadContent, 1000);
   }
-}
+};
 
+const statusElement = document.getElementById("status");
 const textarea = document.getElementById("textarea");
 let content = textarea.value;
 const markdown = document.getElementById("markdown");
@@ -44,37 +73,22 @@ uploadContent();
 const md = window
   .markdownit({ html: true, linkify: true })
   .use(window.markdownitTaskLists);
+initMarkdownitLinkOpen(md);
 
-// Remember the old renderer if overridden, or proxy to the default renderer.
-const defaultRender =
-  md.renderer.rules.link_open ||
-  function (tokens, idx, options, _, self) {
-    return self.renderToken(tokens, idx, options);
-  };
-// Add target="_blank" to all other links
-md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
-  try {
-    const map = new Map(tokens[idx].attrs);
-    const url = new URL(map.get("href"));
-    if (url.origin !== window.location.origin) {
-      // Add a new `target` attribute, or replace the value of the existing one.
-      tokens[idx].attrSet("target", "_blank");
-    }
-  } catch (error) {}
-
-  // Pass the token to the default renderer.
-  return defaultRender(tokens, idx, options, env, self);
-};
-
-markdown.innerHTML = md.render(content);
-textarea.addEventListener("input", function (e) {
+textarea.addEventListener("input", (e) => {
+  if (content === textarea.value) {
+    statusElement.className = "status-success";
+  } else {
+    statusElement.className = "status-attention";
+  }
   markdown.innerHTML = md.render(e.target.value);
 });
+markdown.innerHTML = md.render(content);
 
-function initSplit() {
+const initSplit = () => {
   return Split(["#textarea", "#markdown"], {
     direction,
-    gutter: function (_, direction) {
+    gutter: (_, direction) => {
       const gutter = document.createElement("div");
       gutter.className = `gutter gutter-${direction}`;
 
@@ -106,18 +120,15 @@ function initSplit() {
     },
     gutterSize: 16,
     sizes,
-    onDragEnd: function (e) {
-      sizes = e;
-      localStorage.setItem(
-        `split-sizes${window.location.pathname}`,
-        JSON.stringify(e)
-      );
+    onDragEnd: (e) => {
+      localStorage.setItem(splitSizesKey, JSON.stringify(e));
     },
   });
-}
+};
 
 let direction = window.innerWidth > 789 ? "horizontal" : "vertical";
-let sizes = localStorage.getItem(`split-sizes${window.location.pathname}`);
+const splitSizesKey = `split-sizes${window.location.pathname}`;
+let sizes = localStorage.getItem(splitSizesKey);
 if (sizes) {
   sizes = JSON.parse(sizes);
 } else {
@@ -125,7 +136,7 @@ if (sizes) {
 }
 let split = initSplit();
 
-window.addEventListener("resize", function () {
+window.addEventListener("resize", () => {
   const newDirection = window.innerWidth > 789 ? "horizontal" : "vertical";
   if (newDirection !== direction) {
     direction = newDirection;

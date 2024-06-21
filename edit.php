@@ -23,10 +23,11 @@ if (
 
 $path = '_notes' . '/' . $_GET['note'] . '.md';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $text = isset($_POST['text']) ? $_POST['text'] : file_get_contents("php://input");
-  file_put_contents($path, $text);
+  $text = isset($_POST['text']) ? $_POST['text'] : file_get_contents('php://input');
 
-  if (!strlen($text)) {
+  if (strlen($text)) {
+    file_put_contents($path, $text);
+  } else {
     unlink($path);
   }
   die;
@@ -60,16 +61,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                       ?></textarea>
     <div class="markdown-body" id="markdown"></div>
   </div>
-  <div id="toolbar">
-    <span><?php print $_GET['note']; ?></span>
+  <div class="toolbar">
+    <div id="status"></div>
+    <span class="title"><?php print $_GET['note']; ?></span>
     <a href="/edit/">New</a>
     <a href="/<?php print $_GET['note']; ?>">View</a>
     <a id="copy" href="" title="Copy Raw">Copy</a>
+    <a id="delete" href="">Delete</a>
     <a href="/">List</a>
   </div>
   <script src="/js/markdown-it.min.js"></script>
   <script src="/js/markdown-it-task-lists.min.js"></script>
   <script src="/js/split.min.js"></script>
+  <script src="/js/common.js"></script>
   <script src="/js/edit.js"></script>
 </body>
 

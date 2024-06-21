@@ -27,7 +27,7 @@ $files = array_diff(scandir($path), array('.', '..', '.htaccess'));
 
 <body>
   <div class="markdown-body" id="markdown"></div>
-  <div id="toolbar">
+  <div class="toolbar">
     <a href="/edit/">New</a>
   </div>
   <script src="/js/markdown-it.min.js"></script>

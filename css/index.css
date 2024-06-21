@@ -21,48 +21,53 @@ body {
   padding: 16px;
 }
 
-#toolbar {
+.toolbar {
+  align-items: center;
   color: #1f2328;
   display: flex;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   gap: 16px;
   inset-block-start: 2px;
+  inset-inline: 16px;
   position: absolute;
 }
 
-#toolbar span {
+.title {
   font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-#toolbar a {
+.toolbar a {
   background-color: transparent;
   color: #0969da;
   text-decoration: none;
 }
 
-#toolbar a:focus {
+.toolbar a:focus {
   box-shadow: none;
   outline: 2px solid #0969da;
   outline-offset: -2px;
 }
 
-#toolbar a:focus:not(:focus-visible) {
+.toolbar a:focus:not(:focus-visible) {
   outline: 1px solid transparent;
 }
 
-#toolbar a:focus-visible {
+.toolbar a:focus-visible {
   box-shadow: none;
   outline: 2px solid #0969da;
   outline-offset: -2px;
 }
 
-#toolbar a:not([class]):focus,
-#toolbar a:not([class]):focus-visible {
+.toolbar a:not([class]):focus,
+.toolbar a:not([class]):focus-visible {
   outline-offset: 0;
 }
 
-#toolbar a:hover {
+.toolbar a:hover {
   text-decoration: underline;
 }
 
@@ -75,19 +80,19 @@ body {
     border: 1px solid #30363d;
   }
 
-  #toolbar {
+  .toolbar {
     color: #e6edf3;
   }
 
-  #toolbar a {
+  .toolbar a {
     color: #2f81f7;
   }
 
-  #toolbar a:focus {
+  .toolbar a:focus {
     outline: 2px solid #2f81f7;
   }
 
-  #toolbar a:focus-visible {
+  .toolbar a:focus-visible {
     outline: 2px solid #2f81f7;
   }
 }
