@@ -25,10 +25,14 @@ $path = '_notes' . '/' . $_GET['note'] . '.md';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $text = isset($_POST['text']) ? $_POST['text'] : file_get_contents('php://input');
 
+  $success = false;
   if (strlen($text)) {
-    file_put_contents($path, $text);
+    $success = file_put_contents($path, $text);
   } else {
-    unlink($path);
+    $success = unlink($path);
+  }
+  if (!$success) {
+    header('HTTP/1.1 500 Internal Server Error');
   }
   die;
 }
