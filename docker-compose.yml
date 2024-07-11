@@ -1,0 +1,9 @@
+services:
+  mini-web-notepad:
+    container_name: mini-web-notepad
+    image: reg233/mini-web-notepad:latest
+    restart: unless-stopped
+    ports:
+      - "10000:80"
+    volumes:
+      - ./_notes:/var/www/html/_notes

@@ -1,15 +1,4 @@
 <?php
-$protocol = 'http://';
-if (
-  isset($_SERVER['HTTPS']) &&
-  ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
-  isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
-  $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'
-) {
-  $protocol = 'https://';
-}
-$base_url = $protocol . $_SERVER['HTTP_HOST'];
-
 header('Cache-Control: no-store');
 
 if (
@@ -17,19 +6,26 @@ if (
   strlen($_GET['note']) > 64 ||
   !preg_match('/^[a-zA-Z0-9_-]+$/', $_GET['note'])
 ) {
-  header("Location: $base_url/edit/" . substr(str_shuffle('234579abcdefghjkmnpqrstwxyz'), -4));
+  header("Location: /edit/" . substr(str_shuffle('234579abcdefghjkmnpqrstwxyz'), -4));
   die;
 }
 
-$path = '_notes' . '/' . $_GET['note'] . '.md';
+$directory = '_notes';
+$filename = $directory . '/' . $_GET['note'] . '.md';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $text = isset($_POST['text']) ? $_POST['text'] : file_get_contents('php://input');
 
+  if (!is_dir($directory) && !mkdir($directory)) {
+    header('HTTP/1.1 500 Internal Server Error');
+    die;
+  }
+
   $success = false;
   if (strlen($text)) {
-    $success = file_put_contents($path, $text);
+    $success = file_put_contents($filename, $text);
   } else {
-    $success = unlink($path);
+    $success = unlink($filename);
   }
   if (!$success) {
     header('HTTP/1.1 500 Internal Server Error');
@@ -59,8 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
   <div class="container">
     <textarea autofocus id="textarea"><?php
-                                      if (is_file($path)) {
-                                        print htmlspecialchars(file_get_contents($path), ENT_QUOTES, 'UTF-8');
+                                      if (is_file($filename)) {
+                                        print htmlspecialchars(file_get_contents($filename), ENT_QUOTES, 'UTF-8');
                                       }
                                       ?></textarea>
     <div class="markdown-body" id="markdown"></div>

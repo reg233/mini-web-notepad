@@ -1,6 +1,10 @@
 <?php
-$path = '_notes';
-$files = array_diff(scandir($path), array('.', '..', '.htaccess'));
+$directory = '_notes';
+if (!is_dir($directory) && !mkdir($directory)) {
+  header('HTTP/1.1 500 Internal Server Error');
+  die;
+}
+$files = array_diff(scandir($directory), array('.', '..'));
 ?>
 <!DOCTYPE html>
 <html>

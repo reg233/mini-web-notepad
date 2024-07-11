@@ -1,15 +1,4 @@
 <?php
-$protocol = 'http://';
-if (
-  isset($_SERVER['HTTPS']) &&
-  ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
-  isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
-  $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'
-) {
-  $protocol = 'https://';
-}
-$base_url = $protocol . $_SERVER['HTTP_HOST'];
-
 header('Cache-Control: no-store');
 
 if (
@@ -17,16 +6,17 @@ if (
   strlen($_GET['note']) > 64 ||
   !preg_match('/^[a-zA-Z0-9_-]+$/', $_GET['note'])
 ) {
-  header("Location: $base_url/edit/" . substr(str_shuffle('234579abcdefghjkmnpqrstwxyz'), -4));
+  header("Location: /edit/" . substr(str_shuffle('234579abcdefghjkmnpqrstwxyz'), -4));
   die;
 }
 
-$path = '_notes' . '/' . $_GET['note'] . '.md';
+$directory = '_notes';
+$filename = $directory . '/' . $_GET['note'] . '.md';
 $content = '';
-if (is_file($path)) {
-  $content = htmlspecialchars(file_get_contents($path), ENT_QUOTES, 'UTF-8');
+if (is_file($filename)) {
+  $content = htmlspecialchars(file_get_contents($filename), ENT_QUOTES, 'UTF-8');
 } else {
-  header("Location: $base_url/edit/" . $_GET['note']);
+  header("Location: /edit/" . $_GET['note']);
   die;
 }
 
