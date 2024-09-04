@@ -1,38 +1,5 @@
-const copyElement = document.getElementById("copy");
-copyElement.addEventListener("click", (e) => {
-  e.preventDefault();
-
-  if (copyElement.innerText !== "Copied") {
-    navigator.clipboard.writeText(textarea.value);
-    copyElement.innerText = "Copied";
-    setTimeout(() => {
-      copyElement.innerText = "Copy";
-    }, 1000);
-  }
-});
-
-const deleteElement = document.getElementById("delete");
-deleteElement.addEventListener("click", async (e) => {
-  e.preventDefault();
-
-  if (confirm("Do you really want to delete?")) {
-    try {
-      const response = await fetch(window.location.href, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        },
-        method: "POST",
-      });
-      if (response.ok) {
-        window.open("/", "_self");
-      } else {
-        throw new Error();
-      }
-    } catch {
-      alert("Delete failed!");
-    }
-  }
-});
+const getCopyText = () => textarea.value;
+const getDeleteUrl = () => window.location.href;
 
 const uploadContent = async () => {
   if (content !== textarea.value) {
@@ -70,11 +37,7 @@ const markdown = document.getElementById("markdown");
 
 uploadContent();
 
-const md = window
-  .markdownit({ html: true, linkify: true })
-  .use(window.markdownitTaskLists);
-initMarkdownitLinkOpen(md);
-
+const md = initMarkdownIt();
 textarea.addEventListener("input", (e) => {
   if (content === textarea.value) {
     statusElement.className = "status-success";

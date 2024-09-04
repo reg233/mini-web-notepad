@@ -58,55 +58,14 @@ if (is_file($filename)) {
   <script src="/js/markdown-it-task-lists.min.js"></script>
   <script src="/js/common.js"></script>
   <script>
-    const copyElement = document.getElementById("copy");
-    copyElement.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      if (copyElement.innerText !== "Copied") {
-        navigator.clipboard.writeText(content);
-        copyElement.innerText = "Copied";
-        setTimeout(() => {
-          copyElement.innerText = "Copy";
-        }, 1000);
-      }
-    });
-
-    const deleteElement = document.getElementById("delete");
-    deleteElement.addEventListener("click", async (e) => {
-      e.preventDefault();
-
-      if (confirm("Do you really want to delete?")) {
-        const url = `${window.location.origin}/edit${window.location.pathname}`;
-        try {
-          const response = await fetch(url, {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-            },
-            method: "POST",
-          });
-          if (response.ok) {
-            window.open("/", "_self");
-          } else {
-            throw new Error();
-          }
-        } catch {
-          alert("Delete failed!");
-        }
-      }
-    });
+    const getCopyText = () => content;
+    const getDeleteUrl = () => `${window.location.origin}/edit${window.location.pathname}`;
 
     let content = <?php echo json_encode($content); ?>;
     const doc = new DOMParser().parseFromString(content, "text/html");
     content = doc.documentElement.textContent;
 
-    const md = window
-      .markdownit({
-        html: true,
-        linkify: true
-      })
-      .use(window.markdownitTaskLists);
-    initMarkdownitLinkOpen(md);
-
+    const md = initMarkdownIt();
     document.getElementById("markdown").innerHTML = md.render(content);
   </script>
 </body>
