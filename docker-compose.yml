@@ -2,6 +2,13 @@ services:
   mini-web-notepad:
     container_name: mini-web-notepad
     image: reg233/mini-web-notepad:latest
+    environment:
+      # UPLOAD_MAX_FILESIZE: 20M
+      # POST_MAX_SIZE: 21M
+      # MAX_EXECUTION_TIME: 90
+      # USERNAME: 2
+      # PASSWORD: 33
+      PRIVATE: false
     restart: unless-stopped
     ports:
       - "10000:80"

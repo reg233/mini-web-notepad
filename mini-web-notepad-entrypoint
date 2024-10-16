@@ -1,7 +1,25 @@
 #!/bin/sh
 set -e
 
+UPLOAD_MAX_FILESIZE=${UPLOAD_MAX_FILESIZE:-10M}
+POST_MAX_SIZE=${POST_MAX_SIZE:-11M}
+MAX_EXECUTION_TIME=${MAX_EXECUTION_TIME:-60}
+
+sed -i "s/^upload_max_filesize = .*/upload_max_filesize = $UPLOAD_MAX_FILESIZE/" "$PHP_INI_DIR/php.ini"
+sed -i "s/^post_max_size = .*/post_max_size = $POST_MAX_SIZE/" "$PHP_INI_DIR/php.ini"
+sed -i "s/^max_execution_time = .*/max_execution_time = $MAX_EXECUTION_TIME/" "$PHP_INI_DIR/php.ini"
+
 mkdir -p _notes
 chown -R www-data:www-data _notes
+
+if [ -n "$USERNAME" ] && [ -n "$PASSWORD" ]; then
+  htpasswd -cb .htpasswd "$USERNAME" "$PASSWORD"
+
+  sed -i '/# <If "%{REQUEST_URI} =~ m#^\/(edit\/.*|edit.php)$#">/,/# <\/If>/s/^# //' .htaccess
+
+  if [ "$PRIVATE" = "true" ]; then
+    sed -i '19d; 24d' .htaccess
+  fi
+fi
 
 exec docker-php-entrypoint "$@"

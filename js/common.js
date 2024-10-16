@@ -3,9 +3,9 @@ if (copyElement) {
   copyElement.addEventListener("click", (e) => {
     e.preventDefault();
 
-    if (copyElement.innerText !== "Copied") {
+    if (copyElement.innerText === "Copy") {
       navigator.clipboard.writeText(getCopyText());
-      copyElement.innerText = "Copied";
+      copyElement.innerText = "Copied!";
       setTimeout(() => {
         copyElement.innerText = "Copy";
       }, 1000);
@@ -21,9 +21,8 @@ if (deleteElement) {
     if (confirm("Do you really want to delete?")) {
       try {
         const response = await fetch(getDeleteUrl(), {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-          },
+          body: JSON.stringify({ method: "delete" }),
+          headers: { "Content-Type": "application/json" },
           method: "POST",
         });
         if (response.ok) {
@@ -53,9 +52,11 @@ const initMarkdownIt = () => {
   // Add target="_blank" to all other links.
   md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
     try {
-      const map = new Map(tokens[idx].attrs);
-      const url = new URL(map.get("href"));
-      if (url.origin !== window.location.origin) {
+      const href = new Map(tokens[idx].attrs).get("href");
+      if (
+        href.startsWith("/file/") ||
+        new URL(href).origin !== window.location.origin
+      ) {
         // Add a new `target` attribute, or replace the value of the existing one.
         tokens[idx].attrSet("target", "_blank");
       }
@@ -66,4 +67,54 @@ const initMarkdownIt = () => {
   };
 
   return md;
+};
+
+const getPathnameLastSegment = () => {
+  const segments = window.location.pathname.split("/");
+  return segments.pop() || segments.pop();
+};
+
+const svgNS = "http://www.w3.org/2000/svg";
+
+const initSplit = (elements, direction, key) => {
+  const storageKey = `split-${key}-${getPathnameLastSegment()}`;
+
+  let sizes = localStorage.getItem(storageKey);
+  sizes = sizes ? JSON.parse(sizes) : key === "h" ? [50, 50] : [80, 20];
+
+  return Split(elements, {
+    direction,
+    gutter: (_, direction) => {
+      const gutter = document.createElement("div");
+      gutter.className = `gutter gutter-${direction}`;
+
+      const svg = document.createElementNS(svgNS, "svg");
+      svg.setAttribute("width", "16");
+      svg.setAttribute("height", "16");
+      svg.setAttribute("fill", "currentColor");
+      svg.setAttribute("viewBox", "0 0 16 16");
+      const path = document.createElementNS(svgNS, "path");
+      if (direction === "horizontal") {
+        path.setAttribute(
+          "d",
+          "M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
+        );
+      } else {
+        path.setAttribute(
+          "d",
+          "M2 8a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m3 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2m0-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2"
+        );
+      }
+      svg.appendChild(path);
+
+      gutter.appendChild(svg);
+
+      return gutter;
+    },
+    gutterSize: 16,
+    sizes,
+    onDragEnd: (e) => {
+      localStorage.setItem(storageKey, JSON.stringify(e));
+    },
+  });
 };

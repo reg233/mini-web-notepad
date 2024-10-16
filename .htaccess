@@ -1,19 +1,24 @@
 Options -Indexes
+
 RewriteEngine On
-RewriteRule ^_notes/.*$ - [F,L]
+
+# Disallow access to the _notes directory
+RewriteRule ^_notes/ - [F,L]
+
 RewriteRule ^([a-zA-Z0-9_-]+)$ view.php?note=$1 [L,QSA]
 RewriteRule ^edit/([a-zA-Z0-9_-]*)$ edit.php?note=$1 [L,QSA]
+RewriteRule ^file/([a-zA-Z0-9_-]+)/(.+)$ file.php?note=$1&filename=$2 [B,L,QSA]
 
 <IfModule mod_headers.c>
-  Header set X-Robots-Tag: "noindex, nofollow"
+  Header set X-Robots-Tag "noindex, nofollow"
 </IfModule>
 
 # Uncomment the lines below to enable basic authentication.
 # See https://httpd.apache.org/docs/current/programs/htpasswd.html for generating your .htpasswd
 
-# <If "%{REQUEST_URI} =~ m#^(/edit/.*)|(edit.php)$#">
+# <If "%{REQUEST_URI} =~ m#^/(edit/.*|edit.php)$#">
 #   AuthType Basic
 #   AuthName "Please login!"
-#   AuthUserFile "/home/foo/bar/.htpasswd"
+#   AuthUserFile "/var/www/html/.htpasswd"
 #   Require valid-user
 # </If>
