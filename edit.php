@@ -135,7 +135,11 @@ function handleFileRemove($directory, $filename)
 {
   $filename = $directory . DIRECTORY_SEPARATOR . $filename;
 
-  if (!is_file($filename) || !unlink($filename)) {
+  if (
+    !is_file($filename) ||
+    !unlink($filename) ||
+    (count(scandir($directory)) === 2 && !deleteDirectory($directory))
+  ) {
     http_response_code(500);
   }
 }
