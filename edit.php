@@ -222,6 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <a href="/">List</a>
   </div>
   <script src="/js/markdown-it-14.1.0.min.js"></script>
+  <script src="/js/markdown-it-footnote-4.0.0.min.js"></script>
   <script src="/js/markdown-it-task-lists-2.1.0.min.js"></script>
   <script src="/js/split-1.6.5.min.js"></script>
   <script src="/js/common.js"></script>

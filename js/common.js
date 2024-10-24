@@ -40,6 +40,7 @@ if (deleteElement) {
 const initMarkdownIt = () => {
   const md = window
     .markdownit({ html: true, linkify: true })
+    .use(window.markdownitFootnote)
     .use(window.markdownitTaskLists);
 
   // https://github.com/markdown-it/markdown-it/blob/master/docs/architecture.md#renderer
@@ -64,6 +65,11 @@ const initMarkdownIt = () => {
 
     // Pass the token to the default renderer.
     return defaultRender(tokens, idx, options, env, self);
+  };
+
+  // Footnote customize
+  md.renderer.rules.footnote_block_open = () => {
+    return '<section class="footnotes">\n<ol class="footnotes-list">\n';
   };
 
   return md;
