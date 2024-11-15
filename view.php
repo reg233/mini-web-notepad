@@ -80,12 +80,6 @@ if (empty($content) && empty($filenames)) {
 </head>
 
 <body>
-  <div class="markdown-body" id="markdown"></div>
-  <?php
-  if (!empty($filenames)) {
-    echo '<div class="markdown-body" id="files"></div>';
-  }
-  ?>
   <div class="toolbar">
     <span class="title"><?php echo $_GET['note']; ?></span>
     <a href="/edit/">New</a>
@@ -94,7 +88,14 @@ if (empty($content) && empty($filenames)) {
     <a id="delete" href="">Delete</a>
     <a href="/">List</a>
   </div>
+  <div class="markdown-body" id="markdown"></div>
+  <?php
+  if (!empty($filenames)) {
+    echo '<div class="markdown-body" id="files"></div>';
+  }
+  ?>
   <script src="/js/markdown-it-14.1.0.min.js"></script>
+  <script src="/js/markdown-it-anchor-9.2.0.min.js"></script>
   <script src="/js/markdown-it-footnote-4.0.0.min.js"></script>
   <script src="/js/markdown-it-task-lists-2.1.0.min.js"></script>
   <script src="/js/split-1.6.5.min.js"></script>

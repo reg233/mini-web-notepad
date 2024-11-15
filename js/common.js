@@ -40,6 +40,16 @@ if (deleteElement) {
 const initMarkdownIt = () => {
   const md = window
     .markdownit({ html: true, linkify: true })
+    .use(window.markdownItAnchor, {
+      permalink: window.markdownItAnchor.permalink.linkInsideHeader({
+        class: "anchor",
+        symbol: '<span class="octicon-link"></span>',
+      }),
+      slugify: (s) => {
+        const str = String(s).trim().toLowerCase().replace(/\s+/g, "-");
+        return encodeURIComponent(`h-${str}`);
+      },
+    })
     .use(window.markdownitFootnote)
     .use(window.markdownitTaskLists);
 

@@ -34,11 +34,11 @@ $notes = array_values(array_unique(array_filter(array_map(function ($filename) u
 </head>
 
 <body>
-  <div class="markdown-body" id="markdown"></div>
   <div class="toolbar" style="justify-content: space-between;">
     <a href="/edit/">New</a>
     <a href="https://github.com/reg233/mini-web-notepad" target="_blank">GitHub</a>
   </div>
+  <div class="markdown-body" id="markdown"></div>
   <script src="/js/markdown-it-14.1.0.min.js"></script>
   <script>
     const notes = <?php echo json_encode($notes); ?>;

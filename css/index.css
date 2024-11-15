@@ -48,13 +48,6 @@ body {
   width: 100%;
 }
 
-#markdown {
-  border: 1px solid var(--borderColor-default);
-  height: 100%;
-  overflow: auto;
-  padding: 16px;
-}
-
 .toolbar {
   align-items: center;
   display: flex;
@@ -62,6 +55,18 @@ body {
   inset-block-start: 0;
   inset-inline: 16px;
   position: absolute;
+}
+
+#markdown {
+  border: 1px solid var(--borderColor-default);
+  height: 100%;
+  overflow: auto;
+  padding: 16px;
+}
+
+.markdown-body .anchor {
+  margin-left: -16px;
+  padding-right: 0;
 }
 
 .title {

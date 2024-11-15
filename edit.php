@@ -192,6 +192,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+  <div class="toolbar">
+    <div id="status"></div>
+    <span class="title"><?php echo $_GET['note']; ?></span>
+    <a href="/edit/">New</a>
+    <a href="/<?php echo $_GET['note']; ?>">View</a>
+    <a id="copy" href="" title="Copy Raw">Copy</a>
+    <a id="delete" href="">Delete</a>
+    <a href="/">List</a>
+  </div>
   <div id="editor">
     <textarea autofocus id="textarea"><?php
                                       if (is_file($mdFilename)) {
@@ -212,16 +221,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="loader"></div>
     </div>
   </div>
-  <div class="toolbar">
-    <div id="status"></div>
-    <span class="title"><?php echo $_GET['note']; ?></span>
-    <a href="/edit/">New</a>
-    <a href="/<?php echo $_GET['note']; ?>">View</a>
-    <a id="copy" href="" title="Copy Raw">Copy</a>
-    <a id="delete" href="">Delete</a>
-    <a href="/">List</a>
-  </div>
   <script src="/js/markdown-it-14.1.0.min.js"></script>
+  <script src="/js/markdown-it-anchor-9.2.0.min.js"></script>
   <script src="/js/markdown-it-footnote-4.0.0.min.js"></script>
   <script src="/js/markdown-it-task-lists-2.1.0.min.js"></script>
   <script src="/js/split-1.6.5.min.js"></script>

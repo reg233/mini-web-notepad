@@ -18,7 +18,7 @@ if [ -n "$USERNAME" ] && [ -n "$PASSWORD" ]; then
   sed -i '/# <If "%{REQUEST_URI} =~ m#^\/(edit\/.*|edit.php)$#">/,/# <\/If>/s/^# //' .htaccess
 
   if [ "$PRIVATE" = "true" ]; then
-    sed -i '19d; 24d' .htaccess
+    sed -i '24d; 29d' .htaccess
   fi
 fi
 
