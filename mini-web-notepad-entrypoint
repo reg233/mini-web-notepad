@@ -12,14 +12,4 @@ sed -i "s/^max_execution_time = .*/max_execution_time = $MAX_EXECUTION_TIME/" "$
 mkdir -p _notes
 chown -R www-data:www-data _notes
 
-if [ -n "$USERNAME" ] && [ -n "$PASSWORD" ]; then
-  htpasswd -cb .htpasswd "$USERNAME" "$PASSWORD"
-
-  sed -i '/# <If "%{REQUEST_URI} =~ m#^\/(edit\/.*|edit.php)$#">/,/# <\/If>/s/^# //' .htaccess
-
-  if [ "$PRIVATE" = "true" ]; then
-    sed -i '24d; 29d' .htaccess
-  fi
-fi
-
 exec docker-php-entrypoint "$@"

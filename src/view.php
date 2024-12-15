@@ -1,16 +1,15 @@
 <?php
-header('Cache-Control: no-store');
+require_once '../config.php';
+require_once 'utils.php';
 
-if (
-  !isset($_GET['note']) ||
-  strlen($_GET['note']) > 64 ||
-  !preg_match('/^[a-zA-Z0-9_-]+$/', $_GET['note'])
-) {
-  header("Location: /edit/" . substr(str_shuffle('234579abcdefghjkmnpqrstwxyz'), -4));
-  die;
-}
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Pragma: no-cache');
+header('Expires: 0');
 
-$directory = '_notes' . DIRECTORY_SEPARATOR . $_GET['note'];
+checkNoteName();
+checkPrivateMode('view');
+
+$directory = '../_notes' . DIRECTORY_SEPARATOR . $_GET['note'];
 $mdFilename = $directory . '.md';
 
 $content = '';

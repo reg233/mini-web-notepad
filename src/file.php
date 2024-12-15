@@ -1,4 +1,9 @@
 <?php
+require_once '../config.php';
+require_once 'utils.php';
+
+checkPrivateMode('file');
+
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
   http_response_code(405);
   header('Allow: GET');
@@ -29,7 +34,7 @@ $inlineMimeType = [
   'video/mp4'
 ];
 
-$directory = '_notes' . DIRECTORY_SEPARATOR . $_GET['note'];
+$directory = '../_notes' . DIRECTORY_SEPARATOR . $_GET['note'];
 $filename = $directory . DIRECTORY_SEPARATOR . basename($_GET['filename']);
 
 if (file_exists($filename)) {
@@ -47,7 +52,8 @@ if (file_exists($filename)) {
   }
   header('Content-Length: ' . filesize($filename));
   header('Content-Type: ' . $mimeType);
-  header('Cache-Control: must-revalidate');
+  header('Cache-Control: no-store, no-cache, must-revalidate');
+  header('Pragma: no-cache');
   header('Expires: 0');
 
   ob_clean();

@@ -1,11 +1,15 @@
 <?php
-header('Cache-Control: no-store');
+require_once '../config.php';
+require_once 'utils.php';
 
-$directory = '_notes';
-if (!is_dir($directory) && !mkdir($directory)) {
-  http_response_code(500);
-  die;
-}
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Pragma: no-cache');
+header('Expires: 0');
+
+$directory = '../_notes';
+
+checkPrivateMode('list');
+checkDirectory($directory);
 
 $filenames = array_diff(scandir($directory), array('.', '..'));
 $notes = array_values(array_unique(array_filter(array_map(function ($filename) use ($directory) {
@@ -47,9 +51,17 @@ $notes = array_values(array_unique(array_filter(array_map(function ($filename) u
         return `${i + 1}. [${note}](${note})&nbsp;&nbsp;&nbsp;[Edit](/edit/${note})`;
       })
       .join("\n");
-    const content = `# List\n\n${list}`;
+    const hosted = "<?php echo HOSTED_ON; ?>";
+    const hostedUrl = "<?php echo HOSTED_ON_URL; ?>";
 
-    const md = window.markdownit();
+    let content = `# List\n\n${list}`;
+    if (hosted && hostedUrl) {
+      content = `${content}\n\nHosted on <a href="${hostedUrl}" target="_blank">${hosted}</a>`;
+    }
+
+    const md = window.markdownit({
+      html: true
+    });
     document.getElementById("markdown").innerHTML = md.render(content);
   </script>
 </body>

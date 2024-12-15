@@ -25,7 +25,9 @@ if (deleteElement) {
           headers: { "Content-Type": "application/json" },
           method: "POST",
         });
-        if (response.ok) {
+        if (response.redirected) {
+          window.location.href = response.url;
+        } else if (response.ok) {
           window.open("/", "_self");
         } else {
           throw new Error();

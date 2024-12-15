@@ -10,7 +10,9 @@ const uploadContent = async () => {
         headers: { "Content-Type": "application/json" },
         method: "POST",
       });
-      if (response.ok) {
+      if (response.redirected) {
+        window.location.href = response.url;
+      } else if (response.ok) {
         if (temp === textarea.value) {
           statusElement.className = "status-success";
         }
@@ -112,7 +114,9 @@ const getFiles = async () => {
       headers: { "Content-Type": "application/json" },
       method: "POST",
     });
-    if (response.ok) {
+    if (response.redirected) {
+      window.location.href = response.url;
+    } else if (response.ok) {
       const files = await response.json();
 
       while (filesElement.firstChild) {
@@ -163,7 +167,9 @@ const createFileElement = (filename) => {
           headers: { "Content-Type": "application/json" },
           method: "POST",
         });
-        if (response.ok) {
+        if (response.redirected) {
+          window.location.href = response.url;
+        } else if (response.ok) {
           getFiles();
         } else {
           throw new Error();
@@ -200,7 +206,9 @@ const uploadFile = async (files, items) => {
       body: formData,
       method: "POST",
     });
-    if (response.ok) {
+    if (response.redirected) {
+      window.location.href = response.url;
+    } else if (response.ok) {
       getFiles();
     } else {
       throw new Error();

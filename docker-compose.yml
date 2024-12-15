@@ -6,9 +6,15 @@ services:
       # UPLOAD_MAX_FILESIZE: 20M
       # POST_MAX_SIZE: 21M
       # MAX_EXECUTION_TIME: 90
-      # USERNAME: 2
-      # PASSWORD: 33
-      PRIVATE: false
+      # PRIVATE_MODE: "edit"
+      # USER_ID: "6678ec58-e7d9-46e7-ae25-b92127ef056e"
+      # USERNAME: ""
+      # PASSWORD: ""
+      # JWT_KEY: "cc63eb9d-cde1-442b-b7b1-5d483f6bf511"
+      # HOSTED_ON: ""
+      # HOSTED_ON_URL: ""
+      NOTES_MAX_SIZE: 1073741824
+      NOTE_MAX_LENGTH: 24576
     restart: unless-stopped
     ports:
       - "10000:80"

@@ -1,29 +1,65 @@
 :root {
+  --bgColor-danger-muted: #ffebe9;
   --bgColor-default: #ffffff;
   --bgColor-muted: #f6f8fa;
   --bgColor-neutral-muted: #afb8c133;
+  --borderColor-danger-muted: #ff818266;
   --borderColor-default: #d0d7de;
+  --borderColor-muted: #d1d9e0b3;
+  --button-primary-bgColor-active: #197935;
+  --button-primary-bgColor-disabled: #95d8a6;
+  --button-primary-bgColor-hover: #1c8139;
+  --button-primary-bgColor-rest: #1f883d;
+  --button-primary-borderColor-active: #1f232826;
+  --button-primary-borderColor-disabled: #95d8a6;
+  --button-primary-borderColor-hover: #1f232826;
+  --button-primary-borderColor-rest: #1f232826;
+  --button-primary-fgColor-disabled: #ffffffcc;
+  --button-primary-fgColor-rest: #ffffff;
+  --button-primary-shadow-selected: inset 0px 1px 0px 0px #002d114d;
+  --control-borderColor-rest: #d1d9e0;
   --fgColor-accent: #0969da;
   --fgColor-attention: #9a6700;
   --fgColor-danger: #d1242f;
   --fgColor-default: #1f2328;
+  --fgColor-onEmphasis: #ffffff;
   --fgColor-success: #1a7f37;
   --focus-outlineColor: #0969da;
+  --shadow-inset: inset 0px 1px 0px 0px #1f23280a;
+  --shadow-resting-small: 0px 1px 0px 0px #1f23280a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
+    --bgColor-danger-muted: #f851491a;
     --bgColor-default: #0d1117;
     --bgColor-muted: #161b22;
     --bgColor-neutral-muted: #6e768166;
+    --borderColor-danger-muted: #f8514966;
     --borderColor-default: #30363d;
+    --borderColor-muted: #3d444db3;
+    --button-primary-bgColor-active: #2e9a40;
+    --button-primary-bgColor-disabled: #105823;
+    --button-primary-bgColor-hover: #29903b;
+    --button-primary-bgColor-rest: #238636;
+    --button-primary-borderColor-active: #ffffff1a;
+    --button-primary-borderColor-disabled: #105823;
+    --button-primary-borderColor-hover: #ffffff1a;
+    --button-primary-borderColor-rest: #ffffff1a;
+    --button-primary-fgColor-disabled: #ffffff66;
+    --button-primary-fgColor-rest: #ffffff;
+    --button-primary-shadow-selected: 0px 0px 0px 0px #000000;
+    --control-borderColor-rest: #3d444d;
     --fgColor-accent: #4493f8;
     --fgColor-attention: #d29922;
     --fgColor-danger: #f85149;
     --fgColor-default: #e6edf3;
+    --fgColor-onEmphasis: #ffffff;
     --fgColor-success: #3fb950;
     --focus-outlineColor: #1f6feb;
+    --shadow-inset: inset 0px 1px 0px 0px #0104093d;
+    --shadow-resting-small: 0px 1px 0px 0px #01040966;
   }
 }
 
@@ -34,6 +70,7 @@
 html {
   height: 100%;
   width: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
