@@ -1,7 +1,7 @@
 <?php
+require_once '../config/config.php';
 require_once '../libs/JWT/JWT.php';
 require_once '../libs/JWT/Key.php';
-require_once '../config.php';
 
 use Firebase\JWT\JWT;
 
@@ -60,18 +60,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" href="/images/favicon-16x16.png" type="image/png" sizes="16x16">
-  <link rel="icon" href="/images/favicon-32x32.png" type="image/png" sizes="32x32">
-  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/images/apple-icon-180.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" href="/public/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/public/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/public/images/apple-icon-180.png">
+  <link rel="manifest" href="/public/manifest.json">
   <title>Sign in to Notepad</title>
-  <link rel="stylesheet" href="/css/index.css">
-  <link rel="stylesheet" href="/css/login.css">
+  <link rel="stylesheet" href="/public/css/index.css">
+  <link rel="stylesheet" href="/public/css/login.css">
 </head>
 
 <body>
-  <img alt="Logo" class="logo" src="/images/favicon.svg">
+  <img alt="Logo" class="logo" src="/public/images/favicon.svg">
   <h1>Sign in to Notepad</h1>
   <?php if ($failed): ?>
     <div class="error">Incorrect username or password.</div>

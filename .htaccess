@@ -8,8 +8,8 @@ RewriteEngine On
 # RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Disallow access to the some directory and file
-RewriteRule ^(_notes|libs)/ - [F,L]
-RewriteRule ^(config|src/utils)\.php$ - [F,L]
+RewriteRule ^(_notes|config|libs)(/|$) - [F,L]
+RewriteRule ^src/utils\.php$ - [F,L]
 
 RewriteRule ^$ src/list.php [L,QSA]
 RewriteRule ^login$ src/login.php [L,QSA]

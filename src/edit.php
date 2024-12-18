@@ -1,5 +1,5 @@
 <?php
-require_once '../config.php';
+require_once '../config/config.php';
 require_once 'utils.php';
 
 header('Cache-Control: no-store, no-cache, must-revalidate');
@@ -176,15 +176,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" href="/images/favicon-16x16.png" type="image/png" sizes="16x16">
-  <link rel="icon" href="/images/favicon-32x32.png" type="image/png" sizes="32x32">
-  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/images/apple-icon-180.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" href="/public/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/public/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/public/images/apple-icon-180.png">
+  <link rel="manifest" href="/public/manifest.json">
   <title><?php echo $_GET['note']; ?></title>
-  <link rel="stylesheet" href="/css/github-markdown-5.6.1.min.css">
-  <link rel="stylesheet" href="/css/index.css">
-  <link rel="stylesheet" href="/css/edit.css">
+  <link rel="stylesheet" href="/public/css/github-markdown-5.8.1.min.css">
+  <link rel="stylesheet" href="/public/css/index.css">
+  <link rel="stylesheet" href="/public/css/edit.css">
 </head>
 
 <body>
@@ -217,13 +217,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="loader"></div>
     </div>
   </div>
-  <script src="/js/markdown-it-14.1.0.min.js"></script>
-  <script src="/js/markdown-it-anchor-9.2.0.min.js"></script>
-  <script src="/js/markdown-it-footnote-4.0.0.min.js"></script>
-  <script src="/js/markdown-it-task-lists-2.1.0.min.js"></script>
-  <script src="/js/split-1.6.5.min.js"></script>
-  <script src="/js/common.js"></script>
-  <script src="/js/edit.js"></script>
+  <script src="/public/js/markdown-it-14.1.0.min.js"></script>
+  <script src="/public/js/markdown-it-anchor-9.2.0.min.js"></script>
+  <script src="/public/js/markdown-it-footnote-4.0.0.min.js"></script>
+  <script src="/public/js/markdown-it-task-lists-2.1.0.min.js"></script>
+  <script src="/public/js/split-1.6.5.min.js"></script>
+  <script src="/public/js/common.js"></script>
+  <script src="/public/js/edit.js"></script>
 </body>
 
 </html>

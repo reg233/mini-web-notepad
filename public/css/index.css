@@ -2,9 +2,9 @@
   --bgColor-danger-muted: #ffebe9;
   --bgColor-default: #ffffff;
   --bgColor-muted: #f6f8fa;
-  --bgColor-neutral-muted: #afb8c133;
+  --bgColor-neutral-muted: #818b981f;
   --borderColor-danger-muted: #ff818266;
-  --borderColor-default: #d0d7de;
+  --borderColor-default: #d1d9e0;
   --borderColor-muted: #d1d9e0b3;
   --button-primary-bgColor-active: #197935;
   --button-primary-bgColor-disabled: #95d8a6;
@@ -34,10 +34,10 @@
     color-scheme: dark;
     --bgColor-danger-muted: #f851491a;
     --bgColor-default: #0d1117;
-    --bgColor-muted: #161b22;
-    --bgColor-neutral-muted: #6e768166;
+    --bgColor-muted: #151b23;
+    --bgColor-neutral-muted: #656c7633;
     --borderColor-danger-muted: #f8514966;
-    --borderColor-default: #30363d;
+    --borderColor-default: #3d444d;
     --borderColor-muted: #3d444db3;
     --button-primary-bgColor-active: #2e9a40;
     --button-primary-bgColor-disabled: #105823;
@@ -54,7 +54,7 @@
     --fgColor-accent: #4493f8;
     --fgColor-attention: #d29922;
     --fgColor-danger: #f85149;
-    --fgColor-default: #e6edf3;
+    --fgColor-default: #f0f6fc;
     --fgColor-onEmphasis: #ffffff;
     --fgColor-success: #3fb950;
     --focus-outlineColor: #1f6feb;

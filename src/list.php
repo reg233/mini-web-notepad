@@ -1,5 +1,5 @@
 <?php
-require_once '../config.php';
+require_once '../config/config.php';
 require_once 'utils.php';
 
 header('Cache-Control: no-store, no-cache, must-revalidate');
@@ -27,14 +27,14 @@ $notes = array_values(array_unique(array_filter(array_map(function ($filename) u
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" href="/images/favicon-16x16.png" type="image/png" sizes="16x16">
-  <link rel="icon" href="/images/favicon-32x32.png" type="image/png" sizes="32x32">
-  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/images/apple-icon-180.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" href="/public/images/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/public/images/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="/public/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/public/images/apple-icon-180.png">
+  <link rel="manifest" href="/public/manifest.json">
   <title>List</title>
-  <link rel="stylesheet" href="/css/github-markdown-5.6.1.min.css">
-  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/public/css/github-markdown-5.8.1.min.css">
+  <link rel="stylesheet" href="/public/css/index.css">
 </head>
 
 <body>
@@ -43,7 +43,7 @@ $notes = array_values(array_unique(array_filter(array_map(function ($filename) u
     <a href="https://github.com/reg233/mini-web-notepad" target="_blank">GitHub</a>
   </div>
   <div class="markdown-body" id="markdown"></div>
-  <script src="/js/markdown-it-14.1.0.min.js"></script>
+  <script src="/public/js/markdown-it-14.1.0.min.js"></script>
   <script>
     const notes = <?php echo json_encode($notes); ?>;
     const list = notes
