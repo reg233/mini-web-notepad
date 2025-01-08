@@ -1,7 +1,7 @@
 #status {
   border-radius: 4px;
   height: 8px;
-  inset-inline-start: -12px;
+  left: -12px;
   position: absolute;
   width: 8px;
 }
@@ -55,15 +55,15 @@
 }
 
 .gutter + #markdown {
-  margin-inline-start: 0;
+  margin-left: 0;
 }
 
 .gutter + #file-drop {
-  margin-block-start: 0;
+  margin-top: 0;
 }
 
 #markdown {
-  margin-inline-start: 16px;
+  margin-left: 16px;
   width: calc(50% - 8px);
 }
 
@@ -71,7 +71,7 @@
   background-color: var(--bgColor-default);
   border: 1px solid var(--borderColor-default);
   height: calc(20% - 8px);
-  margin-block-start: 16px;
+  margin-top: 16px;
   overflow: auto;
   padding: 16px;
   position: relative;
@@ -84,8 +84,15 @@
 #files {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
   margin-top: 16px;
+}
+
+#files > * {
+  margin-right: 16px;
+}
+
+#files > *:last-child {
+  margin-right: 0;
 }
 
 .file {
@@ -93,7 +100,8 @@
   background-color: var(--bgColor-neutral-muted);
   border-radius: 6px;
   display: flex;
-  padding-inline: 8px 6px;
+  padding-left: 8px;
+  padding-right: 6px;
 }
 
 .file > button {
@@ -105,7 +113,7 @@
   font-size: 18px;
   height: 32px;
   justify-content: center;
-  margin-inline-start: 8px;
+  margin-left: 8px;
   padding: 0;
 }
 
@@ -166,13 +174,13 @@
   }
 
   .gutter + #markdown {
-    margin-block-start: 0;
+    margin-top: 0;
   }
 
   #markdown {
     height: calc(50% - 8px);
-    margin-inline-start: 0;
-    margin-block-start: 16px;
+    margin-left: 0;
+    margin-top: 16px;
     width: auto;
   }
 }

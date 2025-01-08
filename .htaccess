@@ -13,6 +13,7 @@ RewriteRule ^src/utils\.php$ - [F,L]
 
 RewriteRule ^$ src/list.php [L,QSA]
 RewriteRule ^login$ src/login.php [L,QSA]
+RewriteRule ^logout$ src/logout.php [L,QSA]
 RewriteRule ^([a-zA-Z0-9_-]+)$ src/view.php?note=$1 [L,QSA]
 RewriteRule ^edit/([a-zA-Z0-9_-]*)$ src/edit.php?note=$1 [L,QSA]
 RewriteRule ^file/([a-zA-Z0-9_-]+)/(.+)$ src/file.php?note=$1&filename=$2 [B,L,QSA]

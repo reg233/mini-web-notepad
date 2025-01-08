@@ -58,41 +58,49 @@ if (empty($content) && empty($filenames)) {
     }
 
     .gutter+#files {
-      margin-block-start: 0;
+      margin-top: 0;
     }
 
     #files {
       background-color: var(--bgColor-default);
       border: 1px solid var(--borderColor-default);
       height: calc(20% - 8px);
-      margin-block-start: 16px;
+      margin-top: 16px;
       overflow: auto;
       padding: 16px;
     }
 
-    <?php
-    if (!empty($filenames)) {
-      echo '#markdown { height: calc(80% - 8px); }';
+    <?php if (!empty($filenames)): ?>#markdown {
+      height: calc(80% - 8px);
     }
-    ?>
+
+    <?php endif; ?>
   </style>
 </head>
 
 <body>
-  <div class="toolbar">
+  <div class="menu">
     <span class="title"><?php echo $_GET['note']; ?></span>
-    <a href="/edit/">New</a>
-    <a href="/edit/<?php echo $_GET['note']; ?>">Edit</a>
-    <a id="copy" href="" title="Copy Raw">Copy</a>
-    <a id="delete" href="">Delete</a>
+    <div class="menu-item">
+      <a href="">File</a>
+      <div class="menu-dropdown">
+        <a class="menu-dropdown-item" href="/edit/">New</a>
+        <a class="menu-dropdown-item" href="/edit/<?php echo $_GET['note']; ?>">Edit</a>
+      </div>
+    </div>
+    <div class="menu-item">
+      <a href="">Copy</a>
+      <div class="menu-dropdown">
+        <a class="menu-dropdown-item" href="" id="copy-raw">Raw</a>
+        <a class="menu-dropdown-item" href="" id="copy-link">Link</a>
+      </div>
+    </div>
     <a href="/">List</a>
   </div>
   <div class="markdown-body" id="markdown"></div>
-  <?php
-  if (!empty($filenames)) {
-    echo '<div class="markdown-body" id="files"></div>';
-  }
-  ?>
+  <?php if (!empty($filenames)): ?>
+    <div class="markdown-body" id="files"></div>
+  <?php endif; ?>
   <script src="/public/js/markdown-it-14.1.0.min.js"></script>
   <script src="/public/js/markdown-it-anchor-9.2.0.min.js"></script>
   <script src="/public/js/markdown-it-footnote-4.0.0.min.js"></script>
@@ -100,8 +108,7 @@ if (empty($content) && empty($filenames)) {
   <script src="/public/js/split-1.6.5.min.js"></script>
   <script src="/public/js/common.js"></script>
   <script>
-    const getCopyText = () => content;
-    const getDeleteUrl = () => `${window.location.origin}/edit${window.location.pathname}`;
+    const getCopyRawText = () => content;
 
     let content = <?php echo json_encode($content); ?>;
     const doc = new DOMParser().parseFromString(content, "text/html");

@@ -18,6 +18,7 @@
   --button-primary-fgColor-rest: #ffffff;
   --button-primary-shadow-selected: inset 0px 1px 0px 0px #002d114d;
   --control-borderColor-rest: #d1d9e0;
+  --control-transparent-bgColor-hover: #818b981a;
   --fgColor-accent: #0969da;
   --fgColor-attention: #9a6700;
   --fgColor-danger: #d1242f;
@@ -25,6 +26,9 @@
   --fgColor-onEmphasis: #ffffff;
   --fgColor-success: #1a7f37;
   --focus-outlineColor: #0969da;
+  --overlay-bgColor: #ffffff;
+  --shadow-floating-small: 0px 0px 0px 1px #d1d9e080,
+    0px 6px 12px -3px #25292e0a, 0px 6px 18px 0px #25292e1f;
   --shadow-inset: inset 0px 1px 0px 0px #1f23280a;
   --shadow-resting-small: 0px 1px 0px 0px #1f23280a;
 }
@@ -51,6 +55,7 @@
     --button-primary-fgColor-rest: #ffffff;
     --button-primary-shadow-selected: 0px 0px 0px 0px #000000;
     --control-borderColor-rest: #3d444d;
+    --control-transparent-bgColor-hover: #656c7633;
     --fgColor-accent: #4493f8;
     --fgColor-attention: #d29922;
     --fgColor-danger: #f85149;
@@ -58,6 +63,9 @@
     --fgColor-onEmphasis: #ffffff;
     --fgColor-success: #3fb950;
     --focus-outlineColor: #1f6feb;
+    --overlay-bgColor: #151b23;
+    --shadow-floating-small: 0px 0px 0px 1px #3d444d,
+      0px 6px 12px -3px #01040966, 0px 6px 18px 0px #01040966;
     --shadow-inset: inset 0px 1px 0px 0px #0104093d;
     --shadow-resting-small: 0px 1px 0px 0px #01040966;
   }
@@ -85,13 +93,63 @@ body {
   width: 100%;
 }
 
-.toolbar {
+.menu {
   align-items: center;
   display: flex;
-  gap: 16px;
-  inset-block-start: 0;
-  inset-inline: 16px;
+  left: 16px;
   position: absolute;
+  right: 16px;
+  top: 0;
+}
+
+.menu > * {
+  margin-right: 16px;
+}
+
+.menu > *:last-child {
+  margin-right: 0;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.menu-item.open .menu-dropdown {
+  display: block;
+}
+
+.menu-dropdown {
+  background-color: var(--overlay-bgColor);
+  box-shadow: var(--shadow-floating-small);
+  display: none;
+  left: -12px;
+  min-width: 128px;
+  padding: 6px 0;
+  position: absolute;
+  top: 26px;
+  z-index: 1000;
+}
+
+.menu-item > a {
+  display: block;
+}
+
+.menu-dropdown-item {
+  color: var(--fgColor-default);
+  display: block;
+  font-size: 14px;
+  padding: 6px 12px;
+}
+
+.menu-dropdown-item:hover {
+  background-color: var(--control-transparent-bgColor-hover);
+}
+
+.menu-dropdown-divider {
+  background-color: var(--borderColor-muted);
+  height: 1px;
+  margin-bottom: 6px;
+  margin-top: 6px;
 }
 
 #markdown {
@@ -132,7 +190,8 @@ button:focus {
 
 a:focus:not(:focus-visible),
 button:focus:not(:focus-visible) {
-  outline: 1px solid transparent;
+  box-shadow: none;
+  outline: none;
 }
 
 a:focus-visible,
@@ -150,10 +209,4 @@ a:not([class]):focus-visible {
 a:not([href]) {
   color: inherit;
   text-decoration: none;
-}
-
-a:focus:not(:focus-visible),
-button:focus:not(:focus-visible) {
-  box-shadow: none;
-  outline: none;
 }

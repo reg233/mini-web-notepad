@@ -188,13 +188,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-  <div class="toolbar">
+  <div class="menu">
     <div id="status"></div>
     <span class="title"><?php echo $_GET['note']; ?></span>
-    <a href="/edit/">New</a>
-    <a href="/<?php echo $_GET['note']; ?>">View</a>
-    <a id="copy" href="" title="Copy Raw">Copy</a>
-    <a id="delete" href="">Delete</a>
+    <div class="menu-item">
+      <a href="">File</a>
+      <div class="menu-dropdown">
+        <a class="menu-dropdown-item" href="/edit/">New</a>
+        <a class="menu-dropdown-item" href="/<?php echo $_GET['note']; ?>">View</a>
+        <div class="menu-dropdown-divider"></div>
+        <a class="menu-dropdown-item" href="" id="delete">Delete</a>
+      </div>
+    </div>
+    <div class="menu-item">
+      <a href="">Copy</a>
+      <div class="menu-dropdown">
+        <a class="menu-dropdown-item" href="" id="copy-raw">Raw</a>
+        <a class="menu-dropdown-item" href="" id="copy-link">Link</a>
+      </div>
+    </div>
     <a href="/">List</a>
   </div>
   <div id="editor">

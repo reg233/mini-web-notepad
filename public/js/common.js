@@ -1,40 +1,56 @@
-const copyElement = document.getElementById("copy");
-if (copyElement) {
-  copyElement.addEventListener("click", (e) => {
+document.querySelectorAll(".menu-item").forEach((item) => {
+  const title = item.querySelector(".menu-item > a");
+  const dropdown = item.querySelector(".menu-dropdown");
+
+  if (title && dropdown) {
+    title.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      item.classList.toggle("open");
+      document.querySelectorAll(".menu-item").forEach((other) => {
+        if (other !== item) {
+          other.classList.remove("open");
+        }
+      });
+    });
+    dropdown.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+  }
+});
+document.addEventListener("click", () => {
+  document.querySelectorAll(".menu-item").forEach((item) => {
+    item.classList.remove("open");
+  });
+});
+
+const copyRawElement = document.getElementById("copy-raw");
+if (copyRawElement) {
+  copyRawElement.addEventListener("click", (e) => {
     e.preventDefault();
 
-    if (copyElement.innerText === "Copy") {
-      navigator.clipboard.writeText(getCopyText());
-      copyElement.innerText = "Copied!";
+    if (copyRawElement.innerText === "Raw") {
+      navigator.clipboard.writeText(getCopyRawText());
+      copyRawElement.innerText = "Copied!";
       setTimeout(() => {
-        copyElement.innerText = "Copy";
+        copyRawElement.innerText = "Raw";
       }, 1000);
     }
   });
 }
 
-const deleteElement = document.getElementById("delete");
-if (deleteElement) {
-  deleteElement.addEventListener("click", async (e) => {
+const copyLinkElement = document.getElementById("copy-link");
+if (copyLinkElement) {
+  copyLinkElement.addEventListener("click", (e) => {
     e.preventDefault();
 
-    if (confirm("Do you really want to delete?")) {
-      try {
-        const response = await fetch(getDeleteUrl(), {
-          body: JSON.stringify({ method: "delete" }),
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-        });
-        if (response.redirected) {
-          window.location.href = response.url;
-        } else if (response.ok) {
-          window.open("/", "_self");
-        } else {
-          throw new Error();
-        }
-      } catch {
-        alert("Delete failed!");
-      }
+    if (copyLinkElement.innerText === "Link") {
+      navigator.clipboard.writeText(window.location.href);
+      copyLinkElement.innerText = "Copied!";
+      setTimeout(() => {
+        copyLinkElement.innerText = "Link";
+      }, 1000);
     }
   });
 }
@@ -54,6 +70,7 @@ const initMarkdownIt = () => {
     })
     .use(window.markdownitFootnote)
     .use(window.markdownitTaskLists);
+  md.linkify.set({ fuzzyEmail: false });
 
   // https://github.com/markdown-it/markdown-it/blob/master/docs/architecture.md#renderer
   // Remember the old renderer if overridden, or proxy to the default renderer.

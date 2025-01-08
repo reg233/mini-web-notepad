@@ -38,19 +38,39 @@ $notes = array_values(array_unique(array_filter(array_map(function ($filename) u
 </head>
 
 <body>
-  <div class="toolbar" style="justify-content: space-between;">
+  <div class="menu">
+    <span class="title">Mini Web Notepad</span>
     <a href="/edit/">New</a>
+    <?php if (checkLogged()): ?>
+      <a href="" id="logout">Logout</a>
+    <?php endif; ?>
     <a href="https://github.com/reg233/mini-web-notepad" target="_blank">GitHub</a>
   </div>
   <div class="markdown-body" id="markdown"></div>
   <script src="/public/js/markdown-it-14.1.0.min.js"></script>
   <script>
+    const logoutElement = document.getElementById("logout");
+    if (logoutElement) {
+      logoutElement.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        try {
+          const response = await fetch("/logout", {
+            method: "POST"
+          });
+          if (response.ok) {
+            location.reload();
+          } else {
+            throw new Error();
+          }
+        } catch {
+          alert("Logout failed!");
+        }
+      });
+    }
+
     const notes = <?php echo json_encode($notes); ?>;
-    const list = notes
-      .map((note, i) => {
-        return `${i + 1}. [${note}](${note})&nbsp;&nbsp;&nbsp;[Edit](/edit/${note})`;
-      })
-      .join("\n");
+    const list = notes.map((note, i) => `${i + 1}. [${note}](${note})`).join("\n");
     const hosted = "<?php echo HOSTED_ON; ?>";
     const hostedUrl = "<?php echo HOSTED_ON_URL; ?>";
 

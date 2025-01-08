@@ -9,28 +9,12 @@ require_once '../libs/JWT/Key.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-function checkPrivateMode($type)
+function checkLogged($location = null)
 {
   if (!USER_ID || !USERNAME || !PASSWORD || !JWT_KEY || !PRIVATE_MODE) {
-    return;
+    return false;
   }
 
-  if (PRIVATE_MODE === 'all') {
-    checkToken(null);
-  } else {
-    $privateModes = explode(',', PRIVATE_MODE);
-    if (in_array($type, $privateModes)) {
-      $location = null;
-      if ($type === 'list' && !in_array('edit', $privateModes)) {
-        $location = '/edit/';
-      }
-      checkToken($location);
-    }
-  }
-}
-
-function checkToken($location)
-{
   try {
     if (!isset($_COOKIE['token'])) {
       throw new Exception('Token is missing!');
@@ -43,14 +27,44 @@ function checkToken($location)
     if ($decoded->sub !== USER_ID) {
       throw new Exception('Invalid token!');
     }
+
+    return true;
   } catch (Exception $e) {
-    if ($location) {
-      header("Location: $location");
+    if ($location === null) {
+      return false;
     } else {
-      $redirect = urlencode($_SERVER['REQUEST_URI']);
-      header("Location: /login?redirect=$redirect");
+      if ($location === '') {
+        $requestUri = $_SERVER['REQUEST_URI'];
+        if ($requestUri === '/') {
+          header('Location: /login');
+        } else {
+          header('Location: /login?redirect=' . urlencode($requestUri));
+        }
+      } else {
+        header("Location: $location");
+      }
+      die;
     }
-    die;
+  }
+}
+
+function checkPrivateMode($type)
+{
+  if (!USER_ID || !USERNAME || !PASSWORD || !JWT_KEY || !PRIVATE_MODE) {
+    return;
+  }
+
+  if (PRIVATE_MODE === 'all') {
+    checkLogged('');
+  } else {
+    $privateModes = explode(',', PRIVATE_MODE);
+    if (in_array($type, $privateModes)) {
+      $location = '';
+      if ($type === 'list' && !in_array('edit', $privateModes)) {
+        $location = '/edit/';
+      }
+      checkLogged($location);
+    }
   }
 }
 

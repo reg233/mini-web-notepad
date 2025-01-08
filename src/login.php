@@ -1,5 +1,6 @@
 <?php
 require_once '../config/config.php';
+require_once 'utils.php';
 require_once '../libs/JWT/JWT.php';
 require_once '../libs/JWT/Key.php';
 
@@ -9,9 +10,26 @@ header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Pragma: no-cache');
 header('Expires: 0');
 
+function redirect()
+{
+  $redirect = '/';
+  if (isset($_GET['redirect'])) {
+    $redirect = urldecode($_GET['redirect']);
+    if (!preg_match('#^/.*$#', $redirect)) {
+      $redirect = '/';
+    }
+  }
+  header("Location: $redirect");
+  die;
+}
+
 $failed = false;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  if (checkLogged()) {
+    redirect();
+  }
+} else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $username = $_POST['username'] ?? '';
   $password = $_POST['password'] ?? '';
 
@@ -37,15 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       'samesite' => 'Strict',
     ]);
 
-    $redirect = '/';
-    if (isset($_GET['redirect'])) {
-      $redirect = urldecode($_GET['redirect']);
-      if (!preg_match('#^/.*$#', $redirect)) {
-        $redirect = '/';
-      }
-    }
-    header("Location: $redirect");
-    die;
+    redirect();
   } else {
     $failed = true;
   }

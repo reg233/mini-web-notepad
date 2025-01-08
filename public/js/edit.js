@@ -1,5 +1,30 @@
-const getCopyText = () => textarea.value;
-const getDeleteUrl = () => window.location.href;
+const getCopyRawText = () => textarea.value;
+
+const deleteElement = document.getElementById("delete");
+if (deleteElement) {
+  deleteElement.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    if (confirm("Do you really want to delete?")) {
+      try {
+        const response = await fetch(window.location.href, {
+          body: JSON.stringify({ method: "delete" }),
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+        });
+        if (response.redirected) {
+          window.location.href = response.url;
+        } else if (response.ok) {
+          window.open("/", "_self");
+        } else {
+          throw new Error();
+        }
+      } catch {
+        alert("Delete failed!");
+      }
+    }
+  });
+}
 
 const uploadContent = async () => {
   if (content !== textarea.value) {
