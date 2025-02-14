@@ -12,8 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 
 if (
   !isset($_GET['note']) ||
-  strlen($_GET['note']) > 64 ||
-  !preg_match('/^[a-zA-Z0-9_-]+$/', $_GET['note']) ||
+  mb_strlen($_GET['note'], 'UTF-8') > 64 ||
+  !preg_match('/^[a-zA-Z0-9\x{4e00}-\x{9fa5}_-]+$/u', $_GET['note']) ||
   !isset($_GET['filename'])
 ) {
   http_response_code(400);
